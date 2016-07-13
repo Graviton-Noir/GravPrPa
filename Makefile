@@ -1,10 +1,10 @@
 CXX=g++
 CXXFLAGS= -g -Wall -Wextra -Werror -pedantic -std=c++14
-OPENCVLIBS= -lopencv_core -lopencv_videoio -lopencv_highgui
+CVLIBS= -lopencv_core -lopencv_videoio -lopencv_highgui -lopencv_imgproc
 OBJ=src/vid_reader.o
 
 all: $(OBJ)
-	$(CXX) $(CXXFLAGS) $(OPENCVLIBS) $^ -o bin
+	$(CXX) $(CXXFLAGS) $^ -o bin $(CVLIBS)
 
 check:
 
