@@ -23,11 +23,14 @@ int main(int argc, char** argv)
   {
     char *str(argv[1]);
     char *tok = std::strtok(str, ".");
-    tok = std::strtok(NULL, "");
-    if (std::strcmp(tok, ".avi") != 0)
+    tok = std::strtok(NULL, ".");
+    while ((tok = std::strtok(NULL, ".")) && tok[0] != '.')
     {
-      std::cerr << "The selected file is not a .avi" << std::endl;
-      return 1;
+      if (std::strcmp(tok, "avi") != 0)
+      {
+        std::cerr << "The selected file is not a .avi" << std::endl;
+        return 1;
+      }
     }
   }
 
@@ -36,6 +39,7 @@ int main(int argc, char** argv)
   if (!vc.isOpened())
   {
     std::cerr << "The file couldn't be opened !" << std::endl;
+    return 1;
   }
 
   cv::Mat edges;
@@ -45,7 +49,7 @@ int main(int argc, char** argv)
   {
     cv::Mat frame;
     vc >> frame;
-    //cvtColor(frame, edges, CV_BGR2GRAY);
+    cvtColor(frame, edges, CV_BGR2GRAY);
     cv::Canny(edges, edges, 0, 30, 3);
     cv::imshow("edges", edges);
     if (cv::waitKey(30) >= 0)
