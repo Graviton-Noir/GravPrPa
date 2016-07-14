@@ -10,3 +10,7 @@ check:
 
 clean:
 	rm -f bin $(OBJ)
+	rm -f output.mp4
+
+run:	clean all
+	./bin chaton.mp4
