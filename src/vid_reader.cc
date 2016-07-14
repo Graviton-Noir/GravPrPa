@@ -21,6 +21,7 @@ int main(int argc, char** argv)
   }
   else
   {
+    /*
     char *str(argv[1]);
     char *tok = std::strtok(str, ".");
     tok = std::strtok(NULL, ".");
@@ -32,8 +33,10 @@ int main(int argc, char** argv)
         return 1;
       }
     }
+    */
   }
 
+  std::cout << "Opening: " << argv[1] << std::endl;
   // Opening a file via openCV
   cv::VideoCapture vc(argv[1]);
   if (!vc.isOpened())
