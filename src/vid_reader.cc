@@ -72,17 +72,21 @@ int main(int argc, char** argv)
   cv::Mat edges;
   cv::namedWindow("edges", 1);
 
-  while (1)
+  int nb_frame = 0;
+  int max_frame = vc.get(CV_CAP_PROP_FRAME_COUNT);
+  while (nb_frame < max_frame)
   {
     cv::Mat frame;
+    //vc.retrieve(frame);
     vc >> frame;
 
-    cv::Mat blup = apply_filter(frame, nb_filter, multithread);
+    cv::Mat filtred_frame = apply_filter(frame, nb_filter, multithread);
     //apply effect here on frame the display it with imshow
 
-    cv::imshow("edges", frame);
+    cv::imshow("edges", filtred_frame);
     if (cv::waitKey(30) >= 0)
       break;
+    nb_frame++;
   }
 
   return 0;
