@@ -11,6 +11,13 @@ void usage()
   std::cout << "prog file" << std::endl;
 }
 
+cv::Mat apply_filter(cv::Mat frame)
+{
+  //basi struct, maybe add a number un parameter to choise the filter
+  //to apply?
+  return frame;
+}
+
 int main(int argc, char** argv)
 {
   if (argc == 1)
@@ -21,6 +28,10 @@ int main(int argc, char** argv)
   }
   else
   {
+
+    //Buged for the moment, it eat the .avi extension (quickfix: add back
+    //maybe?)
+
     /*
     char *tok = std::strtok(str, ".");
     tok = std::strtok(NULL, ".");
@@ -34,7 +45,7 @@ int main(int argc, char** argv)
     }*/
   }
 
-  std::cout << "Opening: " << argv[1] << std::endl;
+  std::cout << "Opening: " << argv[1] << std::endl;//checking the file name
   // Opening a file via openCV
   cv::VideoCapture vc(argv[1]);
   if (!vc.isOpened())
@@ -43,8 +54,6 @@ int main(int argc, char** argv)
     return 1;
   }
 
-  
-  
   cv::Mat edges;
   cv::namedWindow("edges", 1);
 
@@ -52,11 +61,9 @@ int main(int argc, char** argv)
   {
     cv::Mat frame;
     vc >> frame;
-    //cvtColor(frame, edges);
 
+    cv::Mat blup = apply_filter(frame);
     //apply effect here on frame the display it with imshow
-
-    //cv::Canny(edges, edges, 0, 30, 3);
 
     cv::imshow("edges", frame);
     if (cv::waitKey(30) >= 0)
