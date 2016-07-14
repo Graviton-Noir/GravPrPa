@@ -11,11 +11,23 @@ void usage()
   std::cout << "prog file" << std::endl;
 }
 
-cv::Mat apply_filter(cv::Mat frame)
+cv::Mat apply_filter(cv::Mat frame, int filter, bool multithread)
 {
+  if (filter == 0 && multithread) // bullshit for no warning
+    return frame;
   //basi struct, maybe add a number un parameter to choise the filter
   //to apply?
   return frame;
+}
+
+int select_filter()
+{
+  return 0;
+}
+
+bool select_multithread()
+{
+  return false;
 }
 
 int main(int argc, char** argv)
@@ -54,6 +66,9 @@ int main(int argc, char** argv)
     return 1;
   }
 
+  int nb_filter = select_filter();
+  bool multithread = select_multithread();
+
   cv::Mat edges;
   cv::namedWindow("edges", 1);
 
@@ -62,7 +77,7 @@ int main(int argc, char** argv)
     cv::Mat frame;
     vc >> frame;
 
-    cv::Mat blup = apply_filter(frame);
+    cv::Mat blup = apply_filter(frame, nb_filter, multithread);
     //apply effect here on frame the display it with imshow
 
     cv::imshow("edges", frame);
