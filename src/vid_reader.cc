@@ -22,7 +22,6 @@ int main(int argc, char** argv)
   else
   {
     /*
-    char *str(argv[1]);
     char *tok = std::strtok(str, ".");
     tok = std::strtok(NULL, ".");
     while ((tok = std::strtok(NULL, ".")) && tok[0] != '.')
@@ -32,8 +31,7 @@ int main(int argc, char** argv)
         std::cerr << "The selected file is not a .avi" << std::endl;
         return 1;
       }
-    }
-    */
+    }*/
   }
 
   std::cout << "Opening: " << argv[1] << std::endl;
@@ -45,6 +43,8 @@ int main(int argc, char** argv)
     return 1;
   }
 
+  
+  
   cv::Mat edges;
   cv::namedWindow("edges", 1);
 
@@ -52,9 +52,13 @@ int main(int argc, char** argv)
   {
     cv::Mat frame;
     vc >> frame;
-    cvtColor(frame, edges, CV_BGR2GRAY);
-    cv::Canny(edges, edges, 0, 30, 3);
-    cv::imshow("edges", edges);
+    //cvtColor(frame, edges);
+
+    //apply effect here on frame the display it with imshow
+
+    //cv::Canny(edges, edges, 0, 30, 3);
+
+    cv::imshow("edges", frame);
     if (cv::waitKey(30) >= 0)
       break;
   }
