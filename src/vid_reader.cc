@@ -58,7 +58,6 @@ int main(int argc, char** argv)
   }
 
   std::cout << "Opening: " << argv[1] << std::endl;//checking the file name
-  // Opening a file via openCV
   cv::VideoCapture vc(argv[1]);
   if (!vc.isOpened())
   {
@@ -66,8 +65,8 @@ int main(int argc, char** argv)
     return 1;
   }
 
-  int nb_filter = select_filter();
-  bool multithread = select_multithread();
+  int nb_filter = select_filter();//Not used yet
+  bool multithread = select_multithread();//false == single thread
 
   cv::Mat edges;
   cv::namedWindow("edges", 1);
@@ -77,7 +76,6 @@ int main(int argc, char** argv)
   while (nb_frame < max_frame)
   {
     cv::Mat frame;
-    //vc.retrieve(frame);
     vc >> frame;
 
     cv::Mat filtred_frame = apply_filter(frame, nb_filter, multithread);
