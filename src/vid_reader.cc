@@ -58,34 +58,56 @@ int main(int argc, char** argv)
   }
 
   std::cout << "Opening: " << argv[1] << std::endl;//checking the file name
-  cv::VideoCapture vc(argv[1]);
+  cv::VideoCapture vc;
+  vc.open(argv[1]);
   if (!vc.isOpened())
   {
     std::cerr << "The file couldn't be opened !" << std::endl;
     return 1;
   }
 
+  std::cout << "yolo" << std::endl;
   int nb_filter = select_filter();//Not used yet
   bool multithread = select_multithread();//false == single thread
 
   cv::Mat edges;
   cv::namedWindow("edges", 1);
 
+  cv::Size frame_size(vc.get(CV_CAP_PROP_FRAME_HEIGHT),
+      vc.get(CV_CAP_PROP_FRAME_WIDTH));
+  cv::VideoWriter output("output.avi", vc.get(CV_CAP_PROP_FOURCC),
+      vc.get(CV_CAP_PROP_FPS), frame_size, true);
+
+  if (!output.isOpened())
+  {
+    std::cout << "Failed to write ouput file!" << std::endl;
+    return 1;
+  }
+
+  std::cout << "frame max: " <<vc.get(CV_CAP_PROP_FRAME_COUNT) << std::endl;
   int nb_frame = 0;
   int max_frame = vc.get(CV_CAP_PROP_FRAME_COUNT);
+  
   while (nb_frame < max_frame)
   {
     cv::Mat frame;
     vc >> frame;
 
+
+
     cv::Mat filtred_frame = apply_filter(frame, nb_filter, multithread);
     //apply effect here on frame the display it with imshow
+
+
+
+    output.write(filtred_frame);
 
     cv::imshow("edges", filtred_frame);
     if (cv::waitKey(30) >= 0)
       break;
     nb_frame++;
   }
+  
 
   return 0;
 }
